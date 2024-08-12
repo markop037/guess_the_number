@@ -1,22 +1,23 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import ttk
 import random
 import time
-from guess_number_db import save_score
+from guess_number_db import *
 
 
 class GuessNumber:
     def __init__(self, master):
         self.master = master
-        master.title("Guess the Number Game")
+        master.title("Guess My Number Game")
 
         screen_width = master.winfo_screenwidth()
         screen_height = master.winfo_screenheight()
 
-        x = (screen_width // 2) - (350 // 2)
-        y = (screen_height // 2) - (250 // 2)
+        x = (screen_width // 2) - (370 // 2)
+        y = (screen_height // 2) - (350 // 2)
 
-        self.master.geometry(f'{350}x{250}+{x}+{y}')
+        self.master.geometry(f'{370}x{350}+{x}+{y}')
 
         self.min_number = 1
         self.max_number = 100
@@ -24,21 +25,33 @@ class GuessNumber:
         self.attempts = 0
         self.start_time = time.time()
 
-        self.username_label = tk.Label(master, text="Enter your username:")
+        self.welcome_label = tk.Label(master, text="Welcome to Guess My Number Game",
+                                      font=("Arial", 15))
+        self.welcome_label.pack(pady=30)
+
+        self.username_label = tk.Label(master, text="Enter your username:", font=("Arial", 10))
         self.username_label.pack()
         self.username_entry = tk.Entry(master)
-        self.username_entry.pack()
+        self.username_entry.pack(pady=10)
 
-        self.guess_label = tk.Label(master, text=f"Enter a number between {self.min_number} and {self.max_number}:")
+        self.guess_label = tk.Label(master, text=f"Enter a number between {self.min_number} and {self.max_number}:",
+                                    font=("Arial", 10))
         self.guess_label.pack()
         self.guess_entry = tk.Entry(master)
-        self.guess_entry.pack()
+        self.guess_entry.pack(pady=10)
 
-        self.submit_button = tk.Button(master, text="Submit", command=self.check_number)
-        self.submit_button.pack()
+        self.submit_button = tk.Button(master, text="Submit", command=self.check_number, font=("Arial", 11))
+        self.submit_button.pack(pady=10)
 
-        self.reset_buttom = tk.Button(master, text="Reset", command=self.reset_game)
-        self.reset_buttom.pack()
+        self.buttom_frame = tk.Frame(master)
+
+        self.reset_buttom = tk.Button(self.buttom_frame, text="Reset", command=self.reset_game, font=("Arial", 11))
+        self.reset_buttom.grid(row=0, column=0, padx=15, pady=10)
+
+        self.show_result = tk.Button(self.buttom_frame, text="Results", command=self.show_results, font=("Arial", 11))
+        self.show_result.grid(row=0, column=1, padx=15, pady=10)
+
+        self.buttom_frame.pack()
 
         self.result_label = tk.Label(master, text="")
         self.result_label.pack()
@@ -71,3 +84,29 @@ class GuessNumber:
                 self.reset_game()
         except ValueError:
             messagebox.showerror("Invalid input", "Please enter a valid number.")
+
+    def show_results(self):
+        rows = open_database()
+
+        result_window = tk.Toplevel(self.master)
+        result_window.title("Scores")
+
+        tree = ttk.Treeview(result_window, columns=("Username", "Attempts", "TimeTaken", "DatePlayed"), show="headings")
+        tree.heading("Username", text="Username")
+        tree.heading("Attempts", text="Attempts")
+        tree.heading("TimeTaken", text="Time Taken")
+        tree.heading("DatePlayed", text="Date Played")
+        tree.pack(fill=tk.BOTH, expand=True)
+
+        tree.tag_configure('evenrow', background='#f0f0f0')
+        tree.tag_configure('oddrow', background='#ffffff')
+
+        for i, row in enumerate(rows):
+            date_played = row.DatePlayed.strftime("%Y-%m-%d %H:%M:%S")
+
+            if i % 2 == 0:
+                tree.insert("", tk.END, values=(row.Username, row.Attempts, round(row.TimeTaken, 2), date_played),
+                            tags=('evenrow',))
+            else:
+                tree.insert("", tk.END, values=(row.Username, row.Attempts, round(row.TimeTaken, 2), date_played),
+                            tags=('oddrow',))

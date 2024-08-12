@@ -21,3 +21,14 @@ def save_score(username, attempts, time_taken):
 
     cursor.commit()
     cursor.close()
+
+
+def open_database():
+    cursor = conn.cursor()
+    cursor.execute("SELECT Username, Attempts, TimeTaken, DatePlayed "
+                   "FROM Scores")
+    rows = cursor.fetchall()
+
+    cursor.close()
+
+    return rows
