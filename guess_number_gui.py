@@ -7,17 +7,19 @@ from guess_number_db import *
 
 
 class GuessNumber:
-    def __init__(self, master):
+    def __init__(self, master, username):
         self.master = master
+        master.configure(background="Orange")
         master.title("Guess My Number Game")
+        self.username = username
 
         screen_width = master.winfo_screenwidth()
         screen_height = master.winfo_screenheight()
 
-        x = (screen_width // 2) - (370 // 2)
-        y = (screen_height // 2) - (350 // 2)
+        x = (screen_width // 2) - (350 // 2)
+        y = (screen_height // 2) - (250 // 2)
 
-        self.master.geometry(f'{370}x{350}+{x}+{y}')
+        self.master.geometry(f'{350}x{250}+{x}+{y}')
 
         self.min_number = 1
         self.max_number = 100
@@ -25,35 +27,30 @@ class GuessNumber:
         self.attempts = 0
         self.start_time = time.time()
 
-        self.welcome_label = tk.Label(master, text="Welcome to Guess My Number Game",
-                                      font=("Arial", 15))
-        self.welcome_label.pack(pady=30)
-
-        self.username_label = tk.Label(master, text="Enter your username:", font=("Arial", 10))
-        self.username_label.pack()
-        self.username_entry = tk.Entry(master)
-        self.username_entry.pack(pady=10)
-
         self.guess_label = tk.Label(master, text=f"Enter a number between {self.min_number} and {self.max_number}:",
-                                    font=("Arial", 10))
-        self.guess_label.pack()
+                                    font=("Arial", 10), background="Orange")
+        self.guess_label.pack(pady=10)
         self.guess_entry = tk.Entry(master)
         self.guess_entry.pack(pady=10)
 
-        self.submit_button = tk.Button(master, text="Submit", command=self.check_number, font=("Arial", 11))
+        self.submit_button = tk.Button(master, text="Submit", command=self.check_number, font=("Arial", 11),
+                                       background="dodger blue")
         self.submit_button.pack(pady=10)
 
         self.buttom_frame = tk.Frame(master)
+        self.buttom_frame.config(background="Orange")
 
-        self.reset_buttom = tk.Button(self.buttom_frame, text="Reset", command=self.reset_game, font=("Arial", 11))
+        self.reset_buttom = tk.Button(self.buttom_frame, text="Reset", command=self.reset_game, font=("Arial", 11),
+                                      background="dodger blue")
         self.reset_buttom.grid(row=0, column=0, padx=15, pady=10)
 
-        self.show_result = tk.Button(self.buttom_frame, text="Results", command=self.show_results, font=("Arial", 11))
+        self.show_result = tk.Button(self.buttom_frame, text="Results", command=self.show_results, font=("Arial", 11),
+                                     background="dodger blue")
         self.show_result.grid(row=0, column=1, padx=15, pady=10)
 
         self.buttom_frame.pack()
 
-        self.result_label = tk.Label(master, text="")
+        self.result_label = tk.Label(master, text="", background="Orange")
         self.result_label.pack()
 
     def reset_game(self):
@@ -63,7 +60,6 @@ class GuessNumber:
         self.start_time = time.time()
         self.result_label.config(text="")
         self.guess_entry.delete(0, tk.END)
-        self.username_entry.delete(0, tk.END)
 
     def check_number(self):
         try:
@@ -74,11 +70,10 @@ class GuessNumber:
             elif user_number > self.number_to_guess:
                 self.result_label.config(text="Your number is too high. Try again.")
             else:
-                username = self.username_entry.get() if self.username_entry.get() else "Guest"
                 time_taken = time.time() - self.start_time
-                save_score(username, self.attempts, time_taken)
+                save_score(self.username, self.attempts, time_taken)
                 messagebox.showinfo("Congratulations",
-                                    f"{username}, you've guessed the number {self.number_to_guess} "
+                                    f"{self.username}, you've guessed the number {self.number_to_guess} "
                                     f"in {self.attempts} attempts and {time_taken:.2f} seconds!")
 
                 self.reset_game()

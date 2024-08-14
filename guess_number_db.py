@@ -1,5 +1,4 @@
 import datetime
-
 import pyodbc
 
 conn = pyodbc.connect(
@@ -32,3 +31,14 @@ def open_database():
     cursor.close()
 
     return rows
+
+
+def check_username_exists(username):
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM Scores WHERE Username = ?", (username,))
+    exists = cursor.fetchone()[0] > 0
+
+    cursor.close()
+
+    return exists
+
