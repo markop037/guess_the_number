@@ -7,7 +7,7 @@
 - [Document Analysis](#document-analysis)
 - [Conceptual Model](#conceptual-model)
 - [Implementation Requirements](#implementation-requirements)
-
+- [Program Demonstration](#program-demonstration)
 ## Introduction
 
 This project presents the implementation of the "Guess My Number" game, which uses a graphical user interface (GUI) developed in the Python programming language, with data stored in an SQL Server database. Users enter their nickname and try to guess a randomly generated number, and the results are saved and can be reviewed within the application.
@@ -44,3 +44,24 @@ The conceptual model of the database includes one table, `Scores`, which contain
 - Python 3.x with the following installed modules: `tkinter`, `pyodbc`, `random`, `time`.
 - Installed SQL Server with a created database `GuessNumberDB` and a `Scores` table.
 - ODBC driver for SQL Server configured on the computer.
+
+## Program Demonstration
+
+<div align="center">
+  <img src="images/Capture1.PNG" alt="Start window" height="350">
+  <p>Start window</p>
+  <img src="images/Capture2.PNG" alt="Error for username" height="350">
+  <p>Error if the username already exists</p>
+  <hr>
+  <img src="images/Capture3.PNG" alt="Guess My Number" height="350">
+  <p>Guess My Number window</p>
+  <img src="images/Capture7.PNG" alt="High" height="350">
+  <img src="images/Capture6.PNG" alt="Low" height="350">
+  <p>Hint whether the number is higher or lower</p>
+  <img src="images/Capture8.PNG" alt="Congratulation" height="350">
+  <p>Congratulation if the user guesses the number</p>
+  <img src="images/Capture4.PNG" alt="Scoreboard" height="350">
+  <p>Scoreboard</p>
+  <img src="images/Capture5.PNG" alt="Error for number" height="350">
+  <p>Error if anything other than a number is entered or if nothing is entered</p>
+</div>
