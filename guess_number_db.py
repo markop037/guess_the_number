@@ -41,4 +41,3 @@ def check_username_exists(username):
     cursor.close()
 
     return exists
-
