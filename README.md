@@ -19,6 +19,7 @@ The "Guess My Number" game process includes the following steps:
 - **User Entry:** The user enters their username in the application's initial window. If the user does not enter a nickname, the nickname "Guest" is automatically assigned.
 - **Username Check:** The application checks whether the username already exists in the database. If it does, the user must enter a new name.
 - **Game Play:** Upon successful username entry, the game starts, where the user attempts to guess the randomly generated number in as few tries as possible.
+- **Reset Button:** The application includes a reset button that allows users to restart the game at any time, clearing the previous guesses and starting a new round.
 - **Saving Results:** Upon game completion, the application saves the user's result (nickname, number of attempts, time taken to guess, date) into the database.
 - **Viewing Results:** The user can review all previous results through the graphical interface.
 
