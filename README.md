@@ -60,7 +60,7 @@ The conceptual model of the database includes one table, `Scores`, which contain
   <p>Hint whether the number is higher or lower</p>
   <img src="images/Capture8.PNG" alt="Congratulation" height="350">
   <p>Congratulation if the user guesses the number</p>
-  <img src="images/Capture4.PNG" alt="Scoreboard" height="350">
+  <img src="images/Capture9.PNG" alt="Scoreboard" height="350">
   <p>Scoreboard</p>
   <img src="images/Capture5.PNG" alt="Error for number" height="350">
   <p>Error if anything other than a number is entered or if nothing is entered</p>
